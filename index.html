@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>线上渠道运营台｜渠道进度与线索管理</title>
+  <style>
+    :root{
+      --bg:#F7F4FF;--bg2:#FFFDF8;--card:#FFFFFF;--ink:#23223A;--muted:#746F88;--line:#E8E1F5;
+      --purple:#7657FF;--purple2:#A68CFF;--purple3:#EFE9FF;--pink:#FF7CB5;--green:#22B68C;--blue:#3F8CFF;
+      --yellow:#FFD166;--orange:#FF9F43;--red:#FF5C73;--shadow:0 18px 45px rgba(84,62,150,.13);--radius:24px;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 8% 0%, rgba(166,140,255,.32), transparent 35%),radial-gradient(circle at 92% 10%, rgba(255,124,181,.20), transparent 29%),linear-gradient(180deg,var(--bg),var(--bg2));min-height:100vh}
+    .page{max-width:1340px;margin:0 auto;padding:28px 20px 70px}.topbar{position:sticky;top:0;z-index:30;margin:-28px -20px 24px;padding:14px 20px;border-bottom:1px solid rgba(232,225,245,.82);background:rgba(247,244,255,.88);backdrop-filter:blur(16px)}
+    .topbar-inner{max-width:1340px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px;min-width:285px}.logo{width:44px;height:44px;border-radius:15px;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;display:grid;place-items:center;font-weight:950;box-shadow:0 12px 28px rgba(118,87,255,.26)}.brand strong{display:block;font-size:16px;line-height:1.2}.brand span{font-size:12px;color:var(--muted);font-weight:800}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.nav a,.chip-btn{border:1px solid var(--line);background:rgba(255,255,255,.82);border-radius:999px;padding:9px 12px;font-size:13px;text-decoration:none;font-weight:900;color:#514A68;cursor:pointer}.nav a:hover,.chip-btn:hover{background:var(--purple3);color:var(--purple)}
+    .hero{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;align-items:stretch;margin-bottom:22px}.card,.hero-main,.hero-side,.stat{background:rgba(255,255,255,.9);border:1px solid rgba(232,225,245,.9);border-radius:var(--radius);box-shadow:var(--shadow)}.hero-main{padding:36px;position:relative;overflow:hidden}.hero-main:after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;right:-100px;top:-100px;background:rgba(118,87,255,.12)}
+    .tag{display:inline-flex;align-items:center;gap:8px;background:var(--purple3);color:var(--purple);border:1px solid #DCD2FF;border-radius:999px;padding:8px 12px;font-weight:950;font-size:13px}h1{font-size:43px;line-height:1.12;letter-spacing:-.8px;margin:16px 0 14px;position:relative;z-index:1}h2{font-size:25px;margin:0 0 8px}h3{font-size:18px;margin:0 0 12px}.subtitle{font-size:17px;line-height:1.85;color:#504A67;margin:0;max-width:850px;position:relative;z-index:1}.muted{color:var(--muted)}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;position:relative;z-index:1}.btn{border:0;border-radius:999px;padding:12px 17px;font-weight:950;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-size:14px}.btn-primary{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;box-shadow:0 15px 30px rgba(118,87,255,.26)}.btn-light{background:#fff;color:var(--purple);border:1px solid var(--line)}.btn-green{background:linear-gradient(135deg,#24C59B,#169473);color:#fff}.btn-blue{background:linear-gradient(135deg,#4DA0FF,#3B66FF);color:#fff}.btn-red{background:linear-gradient(135deg,#FF6F86,#E63B58);color:#fff}
+    .hero-side{padding:24px;display:flex;flex-direction:column;gap:16px}.mini-title{margin:0 0 10px;font-size:12px;color:var(--muted);font-weight:950;letter-spacing:.08em;text-transform:uppercase}.checklist{display:grid;gap:10px}.check{display:flex;gap:11px;background:#FCFAFF;border:1px solid var(--line);border-radius:18px;padding:12px}.dot{width:26px;height:26px;border-radius:10px;background:var(--purple);color:#fff;display:grid;place-items:center;font-weight:950;flex:0 0 auto}.check b{display:block;margin-bottom:3px}.check p{margin:0;color:#625B77;font-size:13px;line-height:1.55}
+    .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin:20px 0 22px}.stat{padding:17px;text-align:center}.stat b{display:block;font-size:25px;color:var(--purple);margin-bottom:5px}.stat span{font-size:13px;color:var(--muted);font-weight:900}
+    .section{padding:26px;margin:22px 0}.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}.section-desc{margin:0;color:var(--muted);line-height:1.75}.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .info{border:1px solid var(--line);border-radius:20px;background:#FCFAFF;padding:17px;line-height:1.75}.info p{margin:0;color:#514B68;line-height:1.85}.info ul{margin:0;padding-left:18px}.info li{margin:4px 0}.info strong{color:var(--purple)}.notice{background:#FFF8E7;border:1px solid #FFE3A0;color:#694B12;border-radius:18px;padding:14px 16px;line-height:1.75}.good{background:#EBFFF8;border-color:#C9F4E6}.bad{background:#FFF4F6;border-color:#FFD2DC}.bluebox{background:#EEF6FF;border-color:#D4E7FF}.pinkbox{background:#FFF1F7;border-color:#FFD5E8}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 18px}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-weight:950;color:#5D5575;cursor:pointer}.tab.active{background:var(--purple);color:#fff;border-color:var(--purple)}.panel{display:none}.panel.active{display:block}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:#fff}table{border-collapse:collapse;width:100%;min-width:980px}th,td{padding:12px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:14px}th{background:#FBF9FF;color:#615A7B;font-weight:950;white-space:nowrap}tr:last-child td{border-bottom:0}.row-actions{display:flex;gap:7px;flex-wrap:wrap}.small-btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 10px;font-size:13px;font-weight:950;color:#5A5275;cursor:pointer}.small-btn.primary{background:var(--purple);color:#fff;border-color:var(--purple)}.small-btn.green{background:var(--green);color:#fff;border-color:var(--green)}.small-btn.red{background:var(--red);color:#fff;border-color:var(--red)}.small-btn.blue{background:var(--blue);color:#fff;border-color:var(--blue)}.small-btn.orange{background:var(--orange);color:#fff;border-color:var(--orange)}
+    .badge{display:inline-flex;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:950;white-space:nowrap}.badge-purple{background:var(--purple3);color:var(--purple)}.badge-green{background:#E7FBF5;color:#10836A}.badge-blue{background:#EAF3FF;color:#2268AD}.badge-yellow{background:#FFF5D8;color:#906312}.badge-red{background:#FFECEF;color:#BC2641}.badge-orange{background:#FFF0E1;color:#A95209}.badge-gray{background:#F2F0F7;color:#6B647D}
+    .form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}.form-grid.two{grid-template-columns:repeat(2,1fr)}.form-grid.three{grid-template-columns:repeat(3,1fr)}label{display:block;margin:0 0 6px;font-size:12px;color:var(--muted);font-weight:950}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px 12px;font:inherit;color:var(--ink);outline:none}textarea{min-height:82px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--purple2);box-shadow:0 0 0 4px rgba(118,87,255,.10)}
+    .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}.toolbar input,.toolbar select{max-width:240px}.empty{padding:22px;border:1px dashed var(--line);border-radius:18px;color:var(--muted);text-align:center;background:#FCFAFF}.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:30px}.right-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .pipeline{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}.pipe{border:1px solid var(--line);border-radius:18px;padding:13px;background:#fff;min-height:92px}.pipe b{display:block;font-size:22px;color:var(--purple);margin:4px 0}.pipe span{font-size:12px;color:var(--muted);font-weight:950}.pipe small{display:block;line-height:1.45;color:#5C5572;margin-top:6px}.progress-bar{height:10px;background:#F0ECFA;border-radius:999px;overflow:hidden;margin-top:10px}.progress-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:999px;width:0%}
+    .timeline{display:grid;gap:10px}.todo{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.todo b{display:block}.todo p{margin:4px 0 0;color:#625B77;font-size:13px;line-height:1.6}.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#201F33;color:#fff;padding:12px 16px;border-radius:999px;box-shadow:0 14px 35px rgba(0,0,0,.18);opacity:0;pointer-events:none;transition:.25s;z-index:99;font-weight:900}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    @media (max-width:1100px){.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.grid-3,.grid-4,.grid-5{grid-template-columns:repeat(2,1fr)}.pipeline{grid-template-columns:repeat(4,1fr)}.form-grid{grid-template-columns:repeat(2,1fr)}h1{font-size:36px}.topbar-inner{align-items:flex-start;flex-direction:column}.nav{justify-content:flex-start}}
+    @media (max-width:660px){.page{padding:20px 14px 60px}.topbar{margin:-20px -14px 20px;padding:14px}.hero-main{padding:24px}.stats,.grid-2,.grid-3,.grid-4,.grid-5,.pipeline,.form-grid,.form-grid.two,.form-grid.three{grid-template-columns:1fr}.section{padding:20px}.section-head{flex-direction:column}h1{font-size:30px}.nav a{font-size:12px;padding:8px 10px}.brand{min-width:0}}
+    @media print{.topbar,.cta-row,.tabs,.toolbar,.btn,.small-btn,.row-actions{display:none!important}body{background:#fff}.page{max-width:none}.card,.hero-main,.hero-side,.stat{box-shadow:none}.panel{display:block!important}.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><div class="logo">OP</div><div><strong>线上渠道运营台</strong><span>渠道进度 · 内容发布 · 线索跟进 · 结算核对</span></div></div>
+      <nav class="nav">
+        <a href="#overview">总览</a><a href="#pipeline">进度漏斗</a><a href="#workspace">运营工作台</a><a href="#todos">待处理</a><a href="#rules">运营口径</a>
+      </nav>
+    </div>
+  </div>
+  <main class="page">
+    <section id="overview" class="hero">
+      <div class="hero-main">
+        <div class="tag">内部使用｜对应渠道端上手页</div>
+        <h1>线上渠道进度运营台</h1>
+        <p class="subtitle">用于记录每个渠道的合作状态、素材分发、内容发布、线索回传、办理进度和奖励结算。渠道端负责“照着发、照着回传”，运营端负责“建档、追进度、看转化、核结算”。</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#workspace">开始录入渠道</a>
+          <button class="btn btn-light" onclick="seedDemo()">载入示例数据</button>
+          <button class="btn btn-green" onclick="exportBackup()">备份全部数据</button>
+          <label class="btn btn-blue" for="importFile">导入备份<input id="importFile" type="file" accept="application/json" style="display:none" onchange="importBackup(event)"></label>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <p class="mini-title">运营每天看什么</p>
+        <div class="checklist">
+          <div class="check"><div class="dot">1</div><div><b>渠道是否已建档</b><p>联系人、渠道类型、专属口令、对接人是否齐全。</p></div></div>
+          <div class="check"><div class="dot">2</div><div><b>是否已经发内容</b><p>记录笔记链接、发布时间、曝光互动和内容状态。</p></div></div>
+          <div class="check"><div class="dot">3</div><div><b>线索到哪一步</b><p>新线索、跟进中、待资料、已提交、已激活、无效。</p></div></div>
+          <div class="check"><div class="dot">4</div><div><b>哪些订单可结算</b><p>激活后过风控期，再进入本月结算核对。</p></div></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="stats" id="stats"></section>
+
+    <section id="pipeline" class="card section">
+      <div class="section-head">
+        <div><h2>渠道进度漏斗</h2><p class="section-desc">把渠道从“刚接触”到“有成交/可结算”的阶段拉出来看，方便运营催进度。</p></div>
+        <div class="right-actions"><button class="chip-btn" onclick="window.print()">打印/保存PDF</button><button class="chip-btn" onclick="clearAllData()">清空本地数据</button></div>
+      </div>
+      <div class="pipeline" id="pipelineBox"></div>
+      <div class="notice" style="margin-top:16px"><strong>提醒：</strong>这个运营台数据保存在当前浏览器本地，适合先试跑和内部管理。正式多人协作时，建议再接到腾讯文档、飞书多维表格或你们自己的 CMHK 后台。</div>
+    </section>
+
+    <section id="workspace" class="card section">
+      <div class="section-head">
+        <div><h2>运营工作台</h2><p class="section-desc">按照“渠道 → 内容 → 线索 → 结算 → 复盘”的顺序管理，尽量减少漏跟进和结算争议。</p></div>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="channels">渠道管理</button>
+        <button class="tab" data-tab="contents">内容发布进度</button>
+        <button class="tab" data-tab="leads">线索跟进</button>
+        <button class="tab" data-tab="settlements">结算核对</button>
+        <button class="tab" data-tab="review">月度复盘</button>
+      </div>
+
+      <div id="channels" class="panel active">
+        <div class="info bluebox"><strong>用法：</strong>每新增一个渠道，先建档并分配专属口令。后续内容、线索、结算都通过这个口令归因。</div>
+        <form id="channelForm" onsubmit="saveChannel(event)">
+          <input type="hidden" id="channelId">
+          <div class="form-grid">
+            <div><label>渠道名称/昵称</label><input id="channelName" required placeholder="例：小红书KOC-小陈"></div>
+            <div><label>渠道类型</label><select id="channelType"><option>学生/KOC</option><option>小红书内容号</option><option>社群推荐人</option><option>私域渠道</option><option>地产/租房渠道</option><option>外贸/跨境渠道</option><option>其他合作渠道</option></select></div>
+            <div><label>主要平台</label><select id="channelPlatform"><option>小红书</option><option>微信社群</option><option>朋友圈</option><option>抖音</option><option>公众号</option><option>线下转介绍</option><option>其他</option></select></div>
+            <div><label>专属口令/编号</label><input id="channelCode" required placeholder="例：XHS01 / QD03"></div>
+            <div><label>联系人/微信</label><input id="channelContact" placeholder="微信号/手机号"></div>
+            <div><label>内部对接人</label><input id="channelOwner" placeholder="例：MIYA"></div>
+            <div><label>当前阶段</label><select id="channelStage"><option>待沟通</option><option>已建档</option><option>已发操作页</option><option>已培训</option><option>已发布内容</option><option>已有线索</option><option>已有成交</option><option>暂停合作</option></select></div>
+            <div><label>单笔奖励/佣金</label><input id="channelReward" type="number" min="0" step="1" placeholder="例：50"></div>
+          </div>
+          <div class="form-grid three">
+            <div><label>加入日期</label><input id="channelJoinDate" type="date"></div>
+            <div><label>本月目标发布数</label><input id="channelTargetPosts" type="number" min="0" placeholder="例：4"></div>
+            <div><label>本月目标成交数</label><input id="channelTargetDeals" type="number" min="0" placeholder="例：2"></div>
+          </div>
+          <div><label>备注</label><textarea id="channelNote" placeholder="记录渠道特点、适合内容方向、注意事项"></textarea></div>
+          <div class="toolbar"><button class="btn btn-primary" type="submit">保存渠道</button><button class="btn btn-light" type="button" onclick="resetChannelForm()">清空表单</button><button class="btn btn-green" type="button" onclick="exportCSV('channels')">导出渠道CSV</button></div>
+        </form>
+        <div class="toolbar"><input id="channelSearch" placeholder="搜索渠道/口令/联系人" oninput="renderAll()"><select id="channelFilter" onchange="renderAll()"><option value="">全部阶段</option><option>待沟通</option><option>已建档</option><option>已发操作页</option><option>已培训</option><option>已发布内容</option><option>已有线索</option><option>已有成交</option><option>暂停合作</option></select></div>
+        <div class="table-wrap"><table><thead><tr><th>渠道</th><th>类型/平台</th><th>口令</th><th>当前阶段</th><th>目标</th><th>线索/成交</th><th>联系人</th><th>备注</th><th>操作</th></tr></thead><tbody id="channelTable"></tbody></table></div>
+      </div>
+
+      <div id="contents" class="panel">
+        <div class="info bluebox"><strong>用法：</strong>渠道发了内容后，把链接、选题、人群、数据截图信息记录进来。后续可对比哪类内容更容易带来线索。</div>
+        <form id="contentForm" onsubmit="saveContent(event)">
+          <input type="hidden" id="contentId">
+          <div class="form-grid">
+            <div><label>关联渠道</label><select id="contentChannel" required></select></div>
+            <div><label>内容平台</label><select id="contentPlatform"><option>小红书</option><option>朋友圈</option><option>微信群</option><option>抖音</option><option>公众号</option><option>其他</option></select></div>
+            <div><label>内容类型</label><select id="contentCategory"><option>来港学生/新生</option><option>上台卡vs储值卡</option><option>一卡两地/通勤</option><option>外贸/跨境</option><option>租房/新来港生活</option><option>问答科普</option><option>其他</option></select></div>
+            <div><label>发布状态</label><select id="contentStatus"><option>待发布</option><option>已发布</option><option>需优化</option><option>已删除/不可见</option></select></div>
+            <div><label>发布时间</label><input id="contentDate" type="date"></div>
+            <div><label>曝光量</label><input id="contentViews" type="number" min="0" placeholder="例：1200"></div>
+            <div><label>互动量</label><input id="contentInteract" type="number" min="0" placeholder="点赞+收藏+评论"></div>
+            <div><label>带来咨询数</label><input id="contentConsults" type="number" min="0" placeholder="例：6"></div>
+          </div>
+          <div class="form-grid two"><div><label>内容标题</label><input id="contentTitle" required placeholder="例：港校新生电话卡怎么选"></div><div><label>内容链接</label><input id="contentLink" placeholder="小红书/抖音/公众号链接"></div></div>
+          <div><label>备注/优化建议</label><textarea id="contentNote" placeholder="记录评论反馈、是否可复用、是否需要换标题"></textarea></div>
+          <div class="toolbar"><button class="btn btn-primary" type="submit">保存内容记录</button><button class="btn btn-light" type="button" onclick="resetContentForm()">清空表单</button><button class="btn btn-green" type="button" onclick="exportCSV('contents')">导出内容CSV</button></div>
+        </form>
+        <div class="toolbar"><input id="contentSearch" placeholder="搜索标题/渠道/链接" oninput="renderAll()"><select id="contentFilter" onchange="renderAll()"><option value="">全部状态</option><option>待发布</option><option>已发布</option><option>需优化</option><option>已删除/不可见</option></select></div>
+        <div class="table-wrap"><table><thead><tr><th>渠道</th><th>标题/链接</th><th>类型</th><th>状态</th><th>数据</th><th>咨询</th><th>备注</th><th>操作</th></tr></thead><tbody id="contentTable"></tbody></table></div>
+      </div>
+
+      <div id="leads" class="panel">
+        <div class="info bluebox"><strong>用法：</strong>每一条客户咨询都要绑定渠道口令。客户是否可办理、是否激活、是否可结算，最后都靠这个表核对。</div>
+        <form id="leadForm" onsubmit="saveLead(event)">
+          <input type="hidden" id="leadId">
+          <div class="form-grid">
+            <div><label>关联渠道</label><select id="leadChannel" required></select></div>
+            <div><label>客户昵称/姓名</label><input id="leadCustomer" required placeholder="例：小李"></div>
+            <div><label>联系方式</label><input id="leadContact" placeholder="微信/手机号/小红书号"></div>
+            <div><label>客户身份</label><select id="leadIdentity"><option>学生/新生</option><option>两地通勤</option><option>外贸/跨境</option><option>新来港工作</option><option>租房客户</option><option>其他</option></select></div>
+            <div><label>需求类型</label><select id="leadDemand"><option>不确定待判断</option><option>香港本地套餐</option><option>一卡两地</option><option>一卡三地</option><option>储值卡</option><option>其他</option></select></div>
+            <div><label>证件类型</label><select id="leadDoc"><option>未确认</option><option>香港身份证</option><option>港澳通行证</option><option>中国护照</option><option>国际护照</option><option>其他</option></select></div>
+            <div><label>跟进状态</label><select id="leadStatus"><option>新线索</option><option>跟进中</option><option>待资料</option><option>已提交</option><option>已激活</option><option>可结算</option><option>已结算</option><option>无效</option></select></div>
+            <div><label>预计/实际激活日期</label><input id="leadActivateDate" type="date"></div>
+            <div><label>订单编号</label><input id="leadOrder" placeholder="如已办理填写"></div>
+            <div><label>套餐/月费</label><input id="leadPlan" placeholder="例：50GB一卡两地"></div>
+            <div><label>奖励金额</label><input id="leadReward" type="number" min="0" step="1" placeholder="默认取渠道单笔奖励"></div>
+            <div><label>来源内容链接</label><input id="leadSource" placeholder="对应笔记/社群/朋友圈"></div>
+          </div>
+          <div><label>跟进备注</label><textarea id="leadNote" placeholder="记录客户疑问、押金接受情况、需要补充资料等"></textarea></div>
+          <div class="toolbar"><button class="btn btn-primary" type="submit">保存线索</button><button class="btn btn-light" type="button" onclick="resetLeadForm()">清空表单</button><button class="btn btn-green" type="button" onclick="exportCSV('leads')">导出线索CSV</button></div>
+        </form>
+        <div class="toolbar"><input id="leadSearch" placeholder="搜索客户/渠道/订单" oninput="renderAll()"><select id="leadFilter" onchange="renderAll()"><option value="">全部状态</option><option>新线索</option><option>跟进中</option><option>待资料</option><option>已提交</option><option>已激活</option><option>可结算</option><option>已结算</option><option>无效</option></select></div>
+        <div class="table-wrap"><table><thead><tr><th>客户</th><th>渠道/口令</th><th>需求</th><th>证件</th><th>状态</th><th>订单/激活</th><th>奖励</th><th>备注</th><th>操作</th></tr></thead><tbody id="leadTable"></tbody></table></div>
+      </div>
+
+      <div id="settlements" class="panel">
+        <div class="info bluebox"><strong>用法：</strong>点击“生成结算建议”会按渠道统计“已激活/可结算/已结算”的订单。最终付款前仍建议和主系统订单、激活状态再核对一次。</div>
+        <div class="toolbar"><input id="settleMonth" type="month"><button class="btn btn-primary" onclick="generateSettlement()">生成结算建议</button><button class="btn btn-green" onclick="exportCSV('settlements')">导出结算CSV</button></div>
+        <div class="table-wrap"><table><thead><tr><th>结算月份</th><th>渠道</th><th>口令</th><th>有效线索</th><th>已激活/可结算</th><th>已结算</th><th>建议应结</th><th>状态</th><th>备注</th><th>操作</th></tr></thead><tbody id="settlementTable"></tbody></table></div>
+      </div>
+
+      <div id="review" class="panel">
+        <div class="grid-2">
+          <div class="info pinkbox"><h3>月度复盘看板</h3><p>这里根据渠道、内容、线索数据自动生成简单复盘，方便你们向领导汇报：哪些渠道有效、哪些内容有效、哪些客户卡点最多。</p></div>
+          <div class="info good"><h3>建议复盘口径</h3><ul><li>本月新增渠道数</li><li>实际活跃渠道数</li><li>发布内容数量及咨询量</li><li>线索转成交情况</li><li>下月重点保留/淘汰渠道</li></ul></div>
+        </div>
+        <div class="grid-3" style="margin-top:16px" id="reviewCards"></div>
+        <div class="table-wrap" style="margin-top:16px"><table><thead><tr><th>渠道</th><th>发布数</th><th>咨询数</th><th>线索数</th><th>成交数</th><th>转化率</th><th>建议动作</th></tr></thead><tbody id="reviewTable"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="todos" class="card section">
+      <div class="section-head"><div><h2>待处理提醒</h2><p class="section-desc">运营每天打开先看这里，优先处理“已发布但没有回传、跟进中未激活、可结算待核对”的事项。</p></div></div>
+      <div class="timeline" id="todoBox"></div>
+    </section>
+
+    <section id="rules" class="card section">
+      <div class="section-head"><div><h2>内部运营口径</h2><p class="section-desc">这部分给你们内部看，用来统一渠道管理和结算边界。</p></div></div>
+      <div class="grid-3">
+        <div class="info good"><h3>渠道建档</h3><ul><li>必须有专属口令</li><li>必须记录联系人和平台</li><li>发渠道端操作页后标记阶段</li><li>重点渠道可单独备注适合选题</li></ul></div>
+        <div class="info bluebox"><h3>线索归因</h3><ul><li>客户备注口令优先</li><li>无口令但有明确截图可人工确认</li><li>重复客户按首次有效来源</li><li>已由其他渠道跟进的不重复计入</li></ul></div>
+        <div class="info pinkbox"><h3>结算核对</h3><ul><li>成功上台并激活后进入统计</li><li>建议过 7–15 天风控期</li><li>异常退订/资料问题暂缓</li><li>每月固定日期统一结算</li></ul></div>
+      </div>
+    </section>
+    <div class="footer">线上渠道运营台｜本地试跑版 · 可后续接入正式后台/飞书多维表格</div>
+  </main>
+  <div class="toast" id="toast">已保存</div>
+
+<script>
+const LS = {
+  channels:'op_channels_v1', contents:'op_contents_v1', leads:'op_leads_v1', settlements:'op_settlements_v1'
+};
+const stageList=['待沟通','已建档','已发操作页','已培训','已发布内容','已有线索','已有成交','暂停合作'];
+const leadActiveStatuses=['已激活','可结算','已结算'];
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function getData(k){try{return JSON.parse(localStorage.getItem(LS[k])||'[]')}catch(e){return []}}
+function setData(k,v){localStorage.setItem(LS[k],JSON.stringify(v))}
+function toast(msg='已保存'){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600)}
+function esc(s){return String(s??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;'}[m]))}
+function badgeStatus(s){const map={
+  '待沟通':'badge-gray','已建档':'badge-purple','已发操作页':'badge-blue','已培训':'badge-blue','已发布内容':'badge-yellow','已有线索':'badge-orange','已有成交':'badge-green','暂停合作':'badge-red',
+  '待发布':'badge-gray','已发布':'badge-green','需优化':'badge-yellow','已删除/不可见':'badge-red',
+  '新线索':'badge-purple','跟进中':'badge-blue','待资料':'badge-yellow','已提交':'badge-orange','已激活':'badge-green','可结算':'badge-green','已结算':'badge-gray','无效':'badge-red','待核对':'badge-yellow'
+};return `<span class="badge ${map[s]||'badge-purple'}">${esc(s||'-')}</span>`}
+function channelName(id){const c=getData('channels').find(x=>x.id===id);return c?c.name:'未匹配渠道'}
+function channelCode(id){const c=getData('channels').find(x=>x.id===id);return c?c.code:'-'}
+function today(){return new Date().toISOString().slice(0,10)}
+function ym(){return new Date().toISOString().slice(0,7)}
+
+function saveChannel(e){e.preventDefault();let arr=getData('channels');const id=document.getElementById('channelId').value||uid();const obj={id,name:channelNameInput.value.trim(),type:channelType.value,platform:channelPlatform.value,code:channelCodeInput.value.trim(),contact:channelContact.value.trim(),owner:channelOwner.value.trim(),stage:channelStage.value,reward:+channelReward.value||0,joinDate:channelJoinDate.value,targetPosts:+channelTargetPosts.value||0,targetDeals:+channelTargetDeals.value||0,note:channelNote.value.trim(),updatedAt:new Date().toISOString()};const idx=arr.findIndex(x=>x.id===id);idx>=0?arr[idx]=obj:arr.unshift(obj);setData('channels',arr);resetChannelForm();renderAll();toast('渠道已保存')}
+function resetChannelForm(){channelForm.reset();channelId.value='';channelJoinDate.value=today();channelOwner.value='MIYA'}
+function editChannel(id){const x=getData('channels').find(x=>x.id===id);if(!x)return;channelId.value=x.id;channelNameInput.value=x.name;channelType.value=x.type;channelPlatform.value=x.platform;channelCodeInput.value=x.code;channelContact.value=x.contact;channelOwner.value=x.owner;channelStage.value=x.stage;channelReward.value=x.reward||'';channelJoinDate.value=x.joinDate;channelTargetPosts.value=x.targetPosts||'';channelTargetDeals.value=x.targetDeals||'';channelNote.value=x.note||'';document.querySelector('[data-tab="channels"]').click();location.hash='workspace'}
+function delItem(kind,id){if(!confirm('确认删除这条记录吗？'))return;setData(kind,getData(kind).filter(x=>x.id!==id));renderAll();toast('已删除')}
+function advanceChannel(id){let arr=getData('channels');const x=arr.find(x=>x.id===id);if(!x)return;let i=stageList.indexOf(x.stage);if(i>=0&&i<stageList.length-2)x.stage=stageList[i+1];setData('channels',arr);renderAll();toast('已推进阶段')}
+
+function saveContent(e){e.preventDefault();let arr=getData('contents');const id=contentId.value||uid();const obj={id,channelId:contentChannel.value,platform:contentPlatform.value,category:contentCategory.value,status:contentStatus.value,date:contentDate.value,views:+contentViews.value||0,interact:+contentInteract.value||0,consults:+contentConsults.value||0,title:contentTitle.value.trim(),link:contentLink.value.trim(),note:contentNote.value.trim(),updatedAt:new Date().toISOString()};const idx=arr.findIndex(x=>x.id===id);idx>=0?arr[idx]=obj:arr.unshift(obj);setData('contents',arr);if(obj.status==='已发布')updateChannelStage(obj.channelId,'已发布内容');resetContentForm();renderAll();toast('内容记录已保存')}
+function resetContentForm(){contentForm.reset();contentId.value='';contentDate.value=today();fillChannelSelects()}
+function editContent(id){const x=getData('contents').find(x=>x.id===id);if(!x)return;contentId.value=x.id;contentChannel.value=x.channelId;contentPlatform.value=x.platform;contentCategory.value=x.category;contentStatus.value=x.status;contentDate.value=x.date;contentViews.value=x.views||'';contentInteract.value=x.interact||'';contentConsults.value=x.consults||'';contentTitle.value=x.title;contentLink.value=x.link;contentNote.value=x.note||'';document.querySelector('[data-tab="contents"]').click();location.hash='workspace'}
+
+function saveLead(e){e.preventDefault();let arr=getData('leads');const ch=getData('channels').find(c=>c.id===leadChannel.value);const id=leadId.value||uid();const reward=(leadReward.value===''?(ch?.reward||0):(+leadReward.value||0));const obj={id,channelId:leadChannel.value,customer:leadCustomer.value.trim(),contact:leadContact.value.trim(),identity:leadIdentity.value,demand:leadDemand.value,doc:leadDoc.value,status:leadStatus.value,activateDate:leadActivateDate.value,order:leadOrder.value.trim(),plan:leadPlan.value.trim(),reward,source:leadSource.value.trim(),note:leadNote.value.trim(),createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};const idx=arr.findIndex(x=>x.id===id);idx>=0?arr[idx]=obj:arr.unshift(obj);setData('leads',arr);if(obj.status!=='无效')updateChannelStage(obj.channelId, leadActiveStatuses.includes(obj.status)?'已有成交':'已有线索');resetLeadForm();renderAll();toast('线索已保存')}
+function resetLeadForm(){leadForm.reset();leadId.value='';leadActivateDate.value='';fillChannelSelects()}
+function editLead(id){const x=getData('leads').find(x=>x.id===id);if(!x)return;leadId.value=x.id;leadChannel.value=x.channelId;leadCustomer.value=x.customer;leadContact.value=x.contact;leadIdentity.value=x.identity;leadDemand.value=x.demand;leadDoc.value=x.doc;leadStatus.value=x.status;leadActivateDate.value=x.activateDate;leadOrder.value=x.order;leadPlan.value=x.plan;leadReward.value=x.reward||'';leadSource.value=x.source;leadNote.value=x.note||'';document.querySelector('[data-tab="leads"]').click();location.hash='workspace'}
+function markLead(id,status){let arr=getData('leads');const x=arr.find(x=>x.id===id);if(!x)return;x.status=status;x.updatedAt=new Date().toISOString();setData('leads',arr);renderAll();toast('状态已更新')}
+function updateChannelStage(id,stage){let arr=getData('channels');const x=arr.find(c=>c.id===id);if(!x)return;const old=stageList.indexOf(x.stage), neu=stageList.indexOf(stage);if(neu>old){x.stage=stage;setData('channels',arr)}}
+
+function generateSettlement(){const month=settleMonth.value||ym();const channels=getData('channels'), leads=getData('leads');let records=[];channels.forEach(c=>{const related=leads.filter(l=>l.channelId===c.id && l.status!=='无效');const monthLeads=related.filter(l=>(l.activateDate||l.createdAt||'').slice(0,7)===month || !l.activateDate);const active=related.filter(l=>leadActiveStatuses.includes(l.status) && (!l.activateDate || l.activateDate.slice(0,7)<=month));const settled=active.filter(l=>l.status==='已结算');const payables=active.filter(l=>l.status==='已激活'||l.status==='可结算');const amount=payables.reduce((s,l)=>s+(+l.reward||+c.reward||0),0);if(monthLeads.length||active.length){records.push({id:uid(),month,channelId:c.id,code:c.code,validLeads:related.length,active:active.length,settled:settled.length,amount,status:amount>0?'待核对':'无应结',note:'由线索表自动生成，付款前需核对主系统订单'});}});setData('settlements',records);renderAll();toast('已生成结算建议')}
+function updateSettlement(id,status){let arr=getData('settlements');const x=arr.find(x=>x.id===id);if(!x)return;x.status=status;setData('settlements',arr);renderAll();toast('结算状态已更新')}
+
+function fillChannelSelects(){const channels=getData('channels');const opts=channels.map(c=>`<option value="${c.id}">${esc(c.name)}｜${esc(c.code)}</option>`).join('');['contentChannel','leadChannel'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts||'<option value="">请先新增渠道</option>'})}
+function renderStats(){const channels=getData('channels'), contents=getData('contents'), leads=getData('leads');const activeChannels=channels.filter(c=>!['待沟通','暂停合作'].includes(c.stage)).length;const posted=contents.filter(c=>c.status==='已发布').length;const leadCount=leads.filter(l=>l.status!=='无效').length;const deals=leads.filter(l=>leadActiveStatuses.includes(l.status)).length;const payable=leads.filter(l=>l.status==='已激活'||l.status==='可结算').reduce((s,l)=>s+(+l.reward||0),0);const conv=leadCount?Math.round(deals/leadCount*100):0;stats.innerHTML=[['渠道数',channels.length],['活跃渠道',activeChannels],['已发布内容',posted],['有效线索',leadCount],['成交/激活',deals],['待核金额','¥'+payable]].map(x=>`<div class="stat"><b>${x[1]}</b><span>${x[0]}</span></div>`).join('')}
+function renderPipeline(){const channels=getData('channels');pipelineBox.innerHTML=stageList.map(stage=>{const count=channels.filter(c=>c.stage===stage).length;const pct=channels.length?Math.round(count/channels.length*100):0;return `<div class="pipe"><span>${stage}</span><b>${count}</b><small>${pct}% 渠道处于此阶段</small><div class="progress-bar"><i style="width:${pct}%"></i></div></div>`}).join('')}
+function renderChannels(){const q=(channelSearch?.value||'').toLowerCase(), f=channelFilter?.value||'';const contents=getData('contents'), leads=getData('leads');let arr=getData('channels').filter(c=>(!f||c.stage===f)&&[c.name,c.code,c.contact,c.type,c.platform,c.owner,c.note].join(' ').toLowerCase().includes(q));channelTable.innerHTML=arr.map(c=>{const cs=contents.filter(x=>x.channelId===c.id).length;const ls=leads.filter(x=>x.channelId===c.id&&x.status!=='无效').length;const ds=leads.filter(x=>x.channelId===c.id&&leadActiveStatuses.includes(x.status)).length;return `<tr><td><b>${esc(c.name)}</b><br><span class="muted">对接：${esc(c.owner||'-')}｜加入：${esc(c.joinDate||'-')}</span></td><td>${esc(c.type)}<br><span class="muted">${esc(c.platform)}</span></td><td><b>${esc(c.code)}</b><br><span class="muted">奖励：¥${esc(c.reward||0)}/单</span></td><td>${badgeStatus(c.stage)}</td><td>发布 ${cs}/${c.targetPosts||0}<br>成交 ${ds}/${c.targetDeals||0}</td><td>线索 ${ls}<br>成交 ${ds}</td><td>${esc(c.contact||'-')}</td><td>${esc(c.note||'-')}</td><td><div class="row-actions"><button class="small-btn primary" onclick="editChannel('${c.id}')">编辑</button><button class="small-btn blue" onclick="advanceChannel('${c.id}')">推进</button><button class="small-btn red" onclick="delItem('channels','${c.id}')">删除</button></div></td></tr>`}).join('')||'<tr><td colspan="9"><div class="empty">暂无渠道记录，先新增一个渠道。</div></td></tr>'}
+function renderContents(){const q=(contentSearch?.value||'').toLowerCase(), f=contentFilter?.value||'';let arr=getData('contents').filter(c=>(!f||c.status===f)&&[c.title,c.link,c.category,channelName(c.channelId),c.note].join(' ').toLowerCase().includes(q));contentTable.innerHTML=arr.map(c=>`<tr><td><b>${esc(channelName(c.channelId))}</b><br><span class="muted">${esc(channelCode(c.channelId))}</span></td><td><b>${esc(c.title)}</b><br>${c.link?`<a href="${esc(c.link)}" target="_blank" class="muted">打开链接</a>`:'<span class="muted">无链接</span>'}</td><td>${esc(c.category)}<br><span class="muted">${esc(c.platform)}｜${esc(c.date||'-')}</span></td><td>${badgeStatus(c.status)}</td><td>曝光 ${c.views||0}<br>互动 ${c.interact||0}</td><td>${c.consults||0}</td><td>${esc(c.note||'-')}</td><td><div class="row-actions"><button class="small-btn primary" onclick="editContent('${c.id}')">编辑</button><button class="small-btn red" onclick="delItem('contents','${c.id}')">删除</button></div></td></tr>`).join('')||'<tr><td colspan="8"><div class="empty">暂无内容记录。</div></td></tr>'}
+function renderLeads(){const q=(leadSearch?.value||'').toLowerCase(), f=leadFilter?.value||'';let arr=getData('leads').filter(l=>(!f||l.status===f)&&[l.customer,l.contact,l.order,l.plan,channelName(l.channelId),channelCode(l.channelId),l.note].join(' ').toLowerCase().includes(q));leadTable.innerHTML=arr.map(l=>`<tr><td><b>${esc(l.customer)}</b><br><span class="muted">${esc(l.contact||'-')}｜${esc(l.identity)}</span></td><td><b>${esc(channelName(l.channelId))}</b><br><span class="muted">${esc(channelCode(l.channelId))}</span></td><td>${esc(l.demand)}<br><span class="muted">${esc(l.plan||'-')}</span></td><td>${esc(l.doc)}</td><td>${badgeStatus(l.status)}</td><td>${esc(l.order||'-')}<br><span class="muted">${esc(l.activateDate||'-')}</span></td><td>¥${esc(l.reward||0)}</td><td>${esc(l.note||'-')}</td><td><div class="row-actions"><button class="small-btn primary" onclick="editLead('${l.id}')">编辑</button><button class="small-btn green" onclick="markLead('${l.id}','可结算')">可结算</button><button class="small-btn blue" onclick="markLead('${l.id}','已结算')">已结算</button><button class="small-btn red" onclick="delItem('leads','${l.id}')">删除</button></div></td></tr>`).join('')||'<tr><td colspan="9"><div class="empty">暂无线索记录。</div></td></tr>'}
+function renderSettlements(){let arr=getData('settlements');settlementTable.innerHTML=arr.map(s=>`<tr><td>${esc(s.month)}</td><td><b>${esc(channelName(s.channelId))}</b></td><td>${esc(s.code||channelCode(s.channelId))}</td><td>${s.validLeads||0}</td><td>${s.active||0}</td><td>${s.settled||0}</td><td><b>¥${s.amount||0}</b></td><td>${badgeStatus(s.status)}</td><td>${esc(s.note||'-')}</td><td><div class="row-actions"><button class="small-btn green" onclick="updateSettlement('${s.id}','已结算')">标记已结算</button><button class="small-btn red" onclick="delItem('settlements','${s.id}')">删除</button></div></td></tr>`).join('')||'<tr><td colspan="10"><div class="empty">暂无结算记录，点击“生成结算建议”。</div></td></tr>'}
+function renderReview(){const channels=getData('channels'), contents=getData('contents'), leads=getData('leads');const categoryCount={};contents.forEach(c=>{categoryCount[c.category]=(categoryCount[c.category]||0)+1});const bestCat=Object.entries(categoryCount).sort((a,b)=>b[1]-a[1])[0]?.[0]||'暂无';const valid=leads.filter(l=>l.status!=='无效').length, deal=leads.filter(l=>leadActiveStatuses.includes(l.status)).length;reviewCards.innerHTML=`<div class="info"><h3>最常用内容方向</h3><p><strong>${esc(bestCat)}</strong><br>可继续观察是否带来有效线索。</p></div><div class="info"><h3>整体线索转化</h3><p><strong>${valid?Math.round(deal/valid*100):0}%</strong><br>${deal}/${valid} 已激活或可结算。</p></div><div class="info"><h3>建议关注</h3><p><strong>${channels.filter(c=>c.stage==='已发布内容'||c.stage==='已有线索').length}</strong> 个渠道需要继续催线索/成交。</p></div>`;reviewTable.innerHTML=channels.map(c=>{const post=contents.filter(x=>x.channelId===c.id).length;const consult=contents.filter(x=>x.channelId===c.id).reduce((s,x)=>s+(+x.consults||0),0);const ls=leads.filter(x=>x.channelId===c.id&&x.status!=='无效').length;const ds=leads.filter(x=>x.channelId===c.id&&leadActiveStatuses.includes(x.status)).length;const rate=ls?Math.round(ds/ls*100):0;let action=ds>0?'保留并提高素材支持':(post>0&&ls===0?'优化标题/评论引导':'继续催首篇内容');return `<tr><td><b>${esc(c.name)}</b><br><span class="muted">${esc(c.code)}</span></td><td>${post}</td><td>${consult}</td><td>${ls}</td><td>${ds}</td><td>${rate}%</td><td>${action}</td></tr>`}).join('')||'<tr><td colspan="7"><div class="empty">暂无复盘数据。</div></td></tr>'}
+function renderTodos(){const channels=getData('channels'), contents=getData('contents'), leads=getData('leads');let todos=[];channels.filter(c=>['已建档','已发操作页','已培训'].includes(c.stage)).slice(0,5).forEach(c=>todos.push({t:'催渠道发布首篇内容',p:`${c.name}｜${c.code} 当前阶段：${c.stage}`,b:'内容'}));contents.filter(c=>c.status==='已发布'&&(c.consults||0)===0).slice(0,5).forEach(c=>todos.push({t:'已发布但暂无咨询',p:`${channelName(c.channelId)}｜${c.title}，建议检查标题/评论区引导`,b:'优化'}));leads.filter(l=>['新线索','跟进中','待资料','已提交','可结算'].includes(l.status)).slice(0,8).forEach(l=>todos.push({t:l.status==='可结算'?'可结算待核对':'客户跟进待推进',p:`${l.customer}｜${channelName(l.channelId)}｜${l.demand}｜${l.status}`,b:l.status}));todoBox.innerHTML=todos.map(x=>`<div class="todo"><div><b>${esc(x.t)}</b><p>${esc(x.p)}</p></div>${badgeStatus(x.b)}</div>`).join('')||'<div class="empty">当前暂无待处理事项。</div>'}
+function renderAll(){fillChannelSelects();renderStats();renderPipeline();renderChannels();renderContents();renderLeads();renderSettlements();renderReview();renderTodos()}
+
+function exportCSV(kind){const arr=getData(kind);if(!arr.length){toast('暂无可导出数据');return}let rows=[];if(kind==='channels')rows=[['渠道名称','类型','平台','口令','联系人','对接人','阶段','单笔奖励','加入日期','目标发布','目标成交','备注'],...arr.map(c=>[c.name,c.type,c.platform,c.code,c.contact,c.owner,c.stage,c.reward,c.joinDate,c.targetPosts,c.targetDeals,c.note])];
+if(kind==='contents')rows=[['渠道','口令','平台','类型','状态','日期','标题','链接','曝光','互动','咨询','备注'],...arr.map(c=>[channelName(c.channelId),channelCode(c.channelId),c.platform,c.category,c.status,c.date,c.title,c.link,c.views,c.interact,c.consults,c.note])];
+if(kind==='leads')rows=[['渠道','口令','客户','联系方式','身份','需求','证件','状态','激活日期','订单','套餐','奖励','来源','备注'],...arr.map(l=>[channelName(l.channelId),channelCode(l.channelId),l.customer,l.contact,l.identity,l.demand,l.doc,l.status,l.activateDate,l.order,l.plan,l.reward,l.source,l.note])];
+if(kind==='settlements')rows=[['月份','渠道','口令','有效线索','已激活/可结算','已结算','建议应结','状态','备注'],...arr.map(s=>[s.month,channelName(s.channelId),s.code,s.validLeads,s.active,s.settled,s.amount,s.status,s.note])];
+const csv='\ufeff'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');downloadFile(csv,`channel-${kind}-${today()}.csv`,'text/csv;charset=utf-8')}
+function downloadFile(content,name,type){const blob=new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href)}
+function exportBackup(){const data={channels:getData('channels'),contents:getData('contents'),leads:getData('leads'),settlements:getData('settlements'),exportedAt:new Date().toISOString()};downloadFile(JSON.stringify(data,null,2),`channel-operation-backup-${today()}.json`,'application/json');toast('已导出备份')}
+function importBackup(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const d=JSON.parse(reader.result);['channels','contents','leads','settlements'].forEach(k=>Array.isArray(d[k])&&setData(k,d[k]));renderAll();toast('备份已导入')}catch(err){alert('导入失败：文件格式不正确')}};reader.readAsText(file)}
+function clearAllData(){if(!confirm('确认清空全部本地数据吗？此操作不可恢复，建议先导出备份。'))return;Object.values(LS).forEach(k=>localStorage.removeItem(k));renderAll();toast('已清空')}
+function seedDemo(){if(!confirm('载入示例数据会覆盖当前本地数据，是否继续？'))return;const c1={id:uid(),name:'小红书KOC-小陈',type:'学生/KOC',platform:'小红书',code:'XHS01',contact:'wx_xiaochen',owner:'MIYA',stage:'已有线索',reward:50,joinDate:today(),targetPosts:4,targetDeals:2,note:'适合发来港新生、上台卡vs储值卡内容'};const c2={id:uid(),name:'租房渠道-阿明',type:'地产/租房渠道',platform:'微信社群',code:'ZF02',contact:'aming',owner:'MIYA',stage:'已发布内容',reward:60,joinDate:today(),targetPosts:2,targetDeals:2,note:'客户多为新来港租房，适合讲本地号码重要性'};setData('channels',[c1,c2]);setData('contents',[{id:uid(),channelId:c1.id,platform:'小红书',category:'来港学生/新生',status:'已发布',date:today(),views:1280,interact:96,consults:7,title:'来香港读书前，电话卡真的别乱选',link:'',note:'评论区有3个问押金'},{id:uid(),channelId:c2.id,platform:'微信社群',category:'租房/新来港生活',status:'已发布',date:today(),views:0,interact:0,consults:3,title:'新来港租房为什么需要本地手机号',link:'',note:'社群转发'}]);setData('leads',[{id:uid(),channelId:c1.id,customer:'小李',contact:'wx_li',identity:'学生/新生',demand:'一卡两地',doc:'港澳通行证',status:'跟进中',activateDate:'',order:'',plan:'50GB一卡两地',reward:50,source:'',note:'8月到港，需确认押金接受情况'},{id:uid(),channelId:c2.id,customer:'陈先生',contact:'wx_chen',identity:'新来港工作',demand:'香港本地套餐',doc:'香港身份证',status:'已激活',activateDate:today(),order:'DD-DEMO-001',plan:'本地5G套餐',reward:60,source:'',note:'已激活，待过风控期'}]);setData('settlements',[]);resetChannelForm();renderAll();toast('示例数据已载入')}
+
+// alias inputs with safer variable names
+const channelNameInput=document.getElementById('channelName');const channelCodeInput=document.getElementById('channelCode');
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active')}));
+resetChannelForm();settleMonth.value=ym();contentDate.value=today();renderAll();
+</script>
+</body>
+</html>
